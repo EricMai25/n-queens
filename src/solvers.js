@@ -16,7 +16,29 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  n=4
+  var solution = []; //fixme
+  let board = new Board({n:n})
+  let matrix = board.rows();
+  let placeRooks = function(array) {
+
+    for (let i = 0; i < array.length; i++) {
+      for (let j = 0; j < array.length; j++) {
+        if ((board.hasRowConflictAt(j) === false) && (board.hasColConflictAt(j) === false)) {
+          if ((board.hasAnyRowConflicts() === false) && (board.hasAnyColConflicts()=== false)) {
+            array[i][j] = 1;
+            //placeRooks(array.slice(1))
+          }
+        }
+      }   
+    }
+  }
+  
+  //   if (!this.hasRowConflictAt(i) && !this.hasColConflictAt(i)){
+  //   return array.push
+  // }
+  placeRooks(matrix)
+
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -25,6 +47,8 @@ window.findNRooksSolution = function(n) {
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
   var solutionCount = undefined; //fixme
+
+
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;

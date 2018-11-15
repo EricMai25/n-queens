@@ -210,7 +210,6 @@
       let matrix = this.rows();    
       let allIndices = this.rows().length + 2;
       let conflict = false;
-      debugger;
       for (let i = allIndices; i > 0; i--) {
         if (conflict === false) {
           conflict = this.hasMinorDiagonalConflictAt(i)
