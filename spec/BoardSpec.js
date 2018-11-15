@@ -39,10 +39,10 @@ describe('Board', function() {
 
   describe('Board with col conflicts', function() {
     verifyConflictTypes(['col', 'rooks', 'queens'], [
-      [1, 0, 0, 0],
+      [0, 0, 1, 0],
       [0, 0, 0, 0],
-      [1, 0, 0, 0],
-      [0, 0, 0, 0]
+      [0, 0, 0, 0],
+      [0, 0, 1, 0]
     ]);
   });
 

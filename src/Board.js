@@ -107,10 +107,10 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      let matrix = this.rows();
-      let counter = 0;
+      var matrix = this.rows();
+      var counter = 0;
       
-      for (let i = 0; i < matrix.length; i++) {
+      for (var i = 0; i < matrix.length; i++) {
         if (matrix[i][colIndex] === 1) {
           counter++     
        }
@@ -127,10 +127,10 @@
     hasAnyColConflicts: function() {
       var matrix = this.rows();
       var conflict = false;
-    
+        // debugger
         for (var i = 0; i < matrix.length; i++) {
           if (conflict === false) {
-            conflict = this.hasColConflictAt(matrix[0][i]);
+            conflict = this.hasColConflictAt(i);
           }
         }
       

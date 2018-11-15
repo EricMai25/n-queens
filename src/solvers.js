@@ -16,39 +16,65 @@
 
 
 window.findNRooksSolution = function(n) {
-  n=4
-  var solution = []; //fixme
-  let board = new Board({n:n})
-  let matrix = board.rows();
-  let placeRooks = function(array) {
+  var board = new Board({n:n});
+  var matrix = board.rows();
 
-    for (let i = 0; i < array.length; i++) {
-      for (let j = 0; j < array.length; j++) {
-        if ((board.hasRowConflictAt(j) === false) && (board.hasColConflictAt(j) === false)) {
-          if ((board.hasAnyRowConflicts() === false) && (board.hasAnyColConflicts()=== false)) {
-            array[i][j] = 1;
-            //placeRooks(array.slice(1))
-          }
-        }
-      }   
-    }
-  }
   
-  //   if (!this.hasRowConflictAt(i) && !this.hasColConflictAt(i)){
-  //   return array.push
-  // }
-  placeRooks(matrix)
+  let placeRooks = function(array) {
+    let placementCounter = 0;
+    for (let i = 0; i < array.length; i++) {
+      for (let j = 0; j < array.length; j++) {  
+        board.togglePiece(i,j);
+        placementCounter++;
+        if (board.hasAnyRooksConflicts() === true) {
+          board.togglePiece(i,j);
+          placementCounter--;
+        } else if (placementCounter === n) {
+          break;
+        }
+      }
+    }
+    return array;
+  }
 
+  matrix = placeRooks(matrix)
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  return matrix;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  
+  var solutionCount = 0;
+  var board = new Board({n:n});
+  var matrix = board.rows();
+  var counter = 0;
 
+  function findSolutions(array, row){
 
+    for (let i = 0; i < array.length; i++) {
+
+      board.togglePiece(row, i)
+      counter++
+      if (board.hasAnyRooksConflicts() === true) {
+        board.togglePiece(row, i)
+        counter--
+      } else if (counter === n) {
+        solutionCount++
+        counter--
+        board.togglePiece(row, i)
+        return
+      } else {
+        findSolutions(array, row+1);
+        
+        board.togglePiece(row, i)
+        counter--
+      }
+    }
+  }
+
+  findSolutions(matrix, 0)
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
