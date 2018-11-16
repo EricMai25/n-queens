@@ -50,30 +50,53 @@ window.countNRooksSolutions = function(n) {
   var board = new Board({n:n});
   var matrix = board.rows();
   var counter = 0;
-  // var answersArray = [];
+  var skipIndex = [];
 
   function findSolutions(array, row){
 
     for (let i = 0; i < array.length; i++) {
-
-      board.togglePiece(row, i)
-      counter++
-      if (board.hasAnyRooksConflicts() === true) {
+      debugger;
+      if (skipIndex.includes(i) === true) {
+        continue;
+      } else if (skipIndex.includes(i) === false) {
+        skipIndex.push(i);
         board.togglePiece(row, i)
-        counter--
-      } else if (counter === n) {
-        solutionCount++
-        console.log(JSON.stringify(array));
-        counter--
+        counter++
+      } 
+
+      if (counter === n) {
+        solutionCount++;
+        counter--;
+        skipIndex.pop();
         board.togglePiece(row, i)
         return
-      } else {
+      } else{
         findSolutions(array, row+1);
-        
         board.togglePiece(row, i)
         counter--
+        skipIndex.pop();
       }
     }
+
+    // for (let i = 0; i < array.length; i++) {
+    //   board.togglePiece(row, i)
+    //   counter++
+
+    //   if (board.hasAnyRooksConflicts() === true) {
+    //     board.togglePiece(row, i)
+    //     counter--
+    //   } else if (counter === n) {
+    //     solutionCount++
+    //     counter--
+    //     board.togglePiece(row, i)
+    //     return
+    //   } else {
+    //     findSolutions(array, row+1);
+        
+    //     board.togglePiece(row, i)
+    //     counter--
+    //   }
+    // }
   }
 
   findSolutions(matrix, 0)
