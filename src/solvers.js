@@ -63,7 +63,7 @@ window.countNRooksSolutions = function(n) {
         counter--
       } else if (counter === n) {
         solutionCount++
-        // answersArray.push(JSON.stringify(board.rows()))
+        console.log(JSON.stringify(array));
         counter--
         board.togglePiece(row, i)
         return
@@ -85,9 +85,9 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  if (n === 0) {
-    return [];
-  }
+  // if (n === 0) {
+  //   return [];
+  // }
 
   var board = new Board({n:n});
   var matrix = board.rows();
@@ -148,8 +148,6 @@ window.countNQueensSolutions = function(n) {
         board.togglePiece(row, i)
         counter--
       } else if (counter === n) {
-        // console.log(solutionCount)
-        // console.log(JSON.stringify(array))
         solutionCount++
         counter--
         board.togglePiece(row, i)
@@ -168,3 +166,15 @@ window.countNQueensSolutions = function(n) {
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
+
+
+// function N(numberOfQueens, leftDiagonal, columns, rightDiagonal, solutionCount, allBitPattern, bitPatternRightMost) {
+//   solutionCount = 0;
+//   numberOfQueens = leftDiagonal ? numberOfQueens : (1 << numberOfQueens) - 1;
+//   allABoard = ~(leftDiagonal | columns | rightDiagonal) & numberOfQueens;
+// while (allBitPattern) allBitPattern ^= bitPatternRightMost = -allBitPattern & allBitPattern, solutionCount += N(numberOfQueens, (leftDiagonal | bitPatternRightMost) << 1, columns | bitPatternRightMost, (rightDiagonal | bitPatternRightMost)  >> 1);
+//   return solutionCount += columns == numberOfQueens
+// }
+
+
+// function N(Q,u,ee,n,s,H,R){s=0;Q=u?Q:(1<<Q)-1;H=~(u|ee|n)&Q;while(H)H^=R=-H&H,s+=N(Q,(u|R)<<1,ee|R,(n|R)>>1);return s+=ee==Q
