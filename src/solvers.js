@@ -55,7 +55,6 @@ window.countNRooksSolutions = function(n) {
   function findSolutions(array, row){
 
     for (let i = 0; i < array.length; i++) {
-      debugger;
       if (skipIndex.includes(i) === true) {
         continue;
       } else if (skipIndex.includes(i) === false) {
@@ -155,33 +154,66 @@ window.countNQueensSolutions = function(n) {
     return 1;
   } 
 
-
   var solutionCount = 0;
   var board = new Board({n:n});
   var matrix = board.rows();
   var counter = 0;
+  var skipIndexCol = [];
+  var skipIndexMajorDiagonal = [];
+  var skipIndexMinorDiagonal = [];
 
   function findSolutions(array, row){
-    
+    debugger;
     for (let i = 0; i < array.length; i++) {
+      if ((skipIndexCol.includes(i)) || (skipIndexMajorDiagonal.includes(row - i)) || (skipIndexMinorDiagonal.includes(row + i))) {
+        continue;
+      } else {
+        skipIndexCol.push(i);
+        skipIndexMajorDiagonal.push(row - i);
+        skipIndexMinorDiagonal.push(row + i);
+        board.togglePiece(row, i);
+        counter++
+      } 
 
-      board.togglePiece(row, i)
-      counter++
-      if (board.hasAnyQueenConflictsOn(row, i) === true) {
-        board.togglePiece(row, i)
-        counter--
-      } else if (counter === n) {
-        solutionCount++
-        counter--
+      if (counter === n) {
+        solutionCount++;
+        counter--;
+        skipIndexCol.pop();
+        skipIndexMajorDiagonal.pop();
+        skipIndexMinorDiagonal.pop();
         board.togglePiece(row, i)
         return
-      } else {
+      } else{
         findSolutions(array, row+1);
-        
         board.togglePiece(row, i)
         counter--
+        skipIndexCol.pop();
+        skipIndexMajorDiagonal.pop();
+        skipIndexMinorDiagonal.pop();
       }
     }
+    
+
+
+    // for (let i = 0; i < array.length; i++) {
+
+    //   board.togglePiece(row, i)
+    //   counter++
+    //   if (board.hasAnyQueenConflictsOn(row, i) === true) {
+    //     board.togglePiece(row, i)
+    //     counter--
+    //   } else if (counter === n) {
+    //     solutionCount++
+    //     counter--
+    //     board.togglePiece(row, i)
+    //     return
+    //   } else {
+    //     findSolutions(array, row+1);
+        
+    //     board.togglePiece(row, i)
+    //     counter--
+    //   }
+    // }
   }
   
 
